@@ -1,0 +1,8 @@
+curl --location --request POST 'https://staging.etiqa.com.sg/MobileSvc/api/Account/v2/GetMyPolicyListing' \
+--header 'Host: staging.etiqa.com.sg' \
+--header 'Authorization: Bearer feWaD3t/UT4K4HJtn5wYGnu3rQ35FICc+X61Hfe2V0TWPfi1Ws+P8iJlViQj8om46b2O0Vtex6CtH5xzHob3V+VJvjNz2bXdpj7SawajZ1wKFRG2Q8isYsZBE8ve04jKR11tUL9X8mZ2ravlAP+9He2oUVcr2+RGSXlHp/UH3YwKY1ZcplDAW5OpCB5tCQJmKsnMPgQhPxKKRau/01dLSv3bY0fVFXMQBCoWNWRIoXZ5PfdzEKx3hoTcdRTJZ0lL7wzzLOFjoIL1o1zE15ev0+OPoMdTcW8jaDdapPa07OmAjnciduBa2Z+JLCfQUDGRMFerWFSJWOcuH3SxIWp6lA==' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: ; BIGipServerapp_staging.etiqa.com.sg_8082=2020872876.37407.0000' \
+--data-raw '{
+  "NRIC": null
+}'
