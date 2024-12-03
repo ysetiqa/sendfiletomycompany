@@ -1,0 +1,48 @@
+Yes, you are absolutely correct! Here's a breakdown of your statement with explanations:
+
+---
+
+### **1. `Task.Run(() => { })` (No Variable Assignment)**
+- **Scenario**: You start a task but don't assign it to a variable or wait for it.
+- **Action Needed**: 
+  - **No need to dispose** because you aren't interacting with the task or accessing unmanaged resources.
+  - The garbage collector will clean it up when it's no longer needed.
+
+---
+
+### **2. `var task = Task.Run(() => { });` (Assigned to a Variable, No `Wait()` or `Result`)**
+- **Scenario**: You assign the task to a variable but don't call `Wait()`, access `Result`, or otherwise block on it.
+- **Action Needed**: 
+  - **No need to dispose** because unmanaged resources (like `WaitHandle`) are not allocated unless explicitly accessed.
+  - You can let the task complete and rely on garbage collection.
+
+---
+
+### **3. `var task = Task.Run(() => { });` with `task.Wait()`**
+- **Scenario**: You start a task, assign it to a variable, and use `Wait()` to block until it completes.
+- **Action Needed**:
+  - **Dispose the task manually** after it completes because `Wait()` indirectly accesses the `Task.WaitHandle`, which allocates unmanaged resources.
+  - Alternatively, switch to `await` for a non-blocking approach and eliminate the need to dispose.
+
+---
+
+### **4. Use `await task`**
+- **Scenario**: Instead of using `Wait()`, you use `await` to asynchronously wait for the task to complete.
+- **Action Needed**:
+  - **No need to dispose** because `await` does not allocate unmanaged resources (like `WaitHandle`), and the runtime handles cleanup.
+
+---
+
+### **Summary**
+| Scenario                                      | Need to Dispose? |
+|-----------------------------------------------|-------------------|
+| `Task.Run(() => { })` (no variable assigned)  | No                |
+| `var task = Task.Run(() => { });`             | No                |
+| `var task = Task.Run(() => { }); task.Wait();`| Yes               |
+| `var task = Task.Run(() => { }); await task;` | No                |
+
+---
+
+### **Best Practice**
+- Prefer **`await`** over `Wait()` whenever possible for cleaner, non-blocking code.
+- Only use `Dispose()` when you're interacting with unmanaged resources (e.g., `Wait()` or `WaitHandle`) or managing a large number of tasks in performance-critical scenarios.
