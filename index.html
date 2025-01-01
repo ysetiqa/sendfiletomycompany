@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Registration with reCAPTCHA v3</title>
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeCJasqAAAAACIwZZTgo1nH3cu9vjz31qaE1zxX"></script>
+</head>
+<body>
+    <h1>Login / Registration Form</h1>
+    <form id="loginForm">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" name="userId" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="hidden" id="recaptchaToken" name="recaptchaToken">
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Execute reCAPTCHA v3 and retrieve the token
+            grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6LeCJasqAAAAACIwZZTgo1nH3cu9vjz31qaE1zxX', {action: 'LOGIN'});
+            });
+            // grecaptcha.ready(function () {
+            //     grecaptcha.execute('6LdQKasqAAAAAKp4STzT6fVzfqoxBTQ0xf2YqHB3', { action: 'login' }).then(function (token) {
+            //         document.getElementById('recaptchaToken').value = token;
+                    
+            //         // Submit the form data via an AJAX request or form submission
+            //         const formData = new FormData(document.getElementById('loginForm'));
+                    
+            //         fetch('/api/login', {
+            //             method: 'POST',
+            //             body: formData,
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             if (data.success) {
+            //                 alert('Login/Registration successful!');
+            //             } else {
+            //                 alert('Verification failed.');
+            //             }
+            //         })
+            //         .catch(error => console.error('Error:', error));
+            //     });
+            // });
+        });
+    </script>
+</body>
+</html>
